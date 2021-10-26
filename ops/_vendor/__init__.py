@@ -11,21 +11,3 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-"""Internal YAML helpers."""
-
-import yaml
-
-# Use C speedups if available
-_safe_loader = getattr(yaml, 'CSafeLoader', yaml.SafeLoader)
-_safe_dumper = getattr(yaml, 'CSafeDumper', yaml.SafeDumper)
-
-
-def safe_load(stream):
-    """Same as yaml.safe_load, but use fast C loader if available."""
-    return yaml.load(stream, Loader=_safe_loader)
-
-
-def safe_dump(data, stream=None, **kwargs):
-    """Same as yaml.safe_dump, but use fast C dumper if available."""
-    return yaml.dump(data, stream=stream, Dumper=_safe_dumper, **kwargs)
